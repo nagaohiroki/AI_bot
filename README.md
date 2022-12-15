@@ -19,8 +19,7 @@ windows
 ```
 SETX /M AI_BOT_TOKEN "aaaa"
 SETX /M OPENAI_API_KEY "bbbb"
-python -m pip install -U openai
-python -m pip install -U "discord.py[voice]"
+python -m pip install -r requirements.txt
 ```
 
 mac
@@ -28,8 +27,7 @@ mac
 ```
 export AI_BOT_TOKEN=aaaa
 export OPENAI_API_KEY=bbbb
-sudo python3 -m pip install -U openai
-sudo python3 -m pip install -U "discord.py[voice]"
+sudo python3 -m pip install -r requirements.txt
 ```
 
 ## Launch
