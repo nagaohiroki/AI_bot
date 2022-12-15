@@ -14,17 +14,34 @@ MyApplications -> SETTINGS/Bot -> Privileged Gateway Intents
 
 ## Server Setting
 
+windows
+
 ```
 SETX /M AI_BOT_TOKEN "aaaa"
 SETX /M OPENAI_API_KEY "bbbb"
-python pip install -U openai
-python pip install -U "discord.py[voice]"
+python -m pip install -U openai
+python -m pip install -U "discord.py[voice]"
+```
+
+mac
+
+```
+export AI_BOT_TOKEN=aaaa
+export OPENAI_API_KEY=bbbb
+sudo python3 -m pip install -U openai
+sudo python3 -m pip install -U "discord.py[voice]"
 ```
 
 ## Launch
 
 ```
 python ai_bot.py
+```
+
+or
+
+```
+python3 ai_bot.py
 ```
 
 ## Message
