@@ -21,8 +21,26 @@ python pip install -U openai
 python pip install -U "discord.py[voice]"
 ```
 
-Launch
+## Launch
 
 ```
 python ai_bot.py
 ```
+
+## Message
+
+change discord setting role name to AI -> AI_bot(avoid wrong mention)
+
+```
+@AI good morning
+@AI /img good morning
+```
+
+or on TEXT CHANNELS "ai"
+
+```
+good morning
+/img good morning
+```
+
+![gm.png](gm.png) 

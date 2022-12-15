@@ -18,21 +18,33 @@ async def on_message(message):
     if message.author.bot:
         print('bot echo')
         return
-    if client.user not in message.mentions:
-        print('no mention')
-        return
-    response = createAI(message.clean_content)
-    print(response)
-    text = response['choices'][0]['text']
+    if message.channel.name != 'ai':
+       if client.user not in message.mentions:
+            print(f'no mention. at: {message.channel}')
+            return
+    text = ''
+    tag = '/img'
+    if tag in message.clean_content:
+        text = create_ai_image(message.clean_content.replace(tag, ''))
+    else:
+        text = create_ai_text(message.clean_content)
     await message.channel.send(text)
 
 
-def createAI(content):
-    return openai.Completion.create(
+def create_ai_text(prompt):
+    response = openai.Completion.create(
         engine="text-davinci-003",
-        prompt=content,
+        prompt=prompt,
         max_tokens=1024,
         temperature=0.5)
+    print(response)
+    return response.choices[0]['text']
+
+
+def create_ai_image(prompt):
+    response = openai.Image.create(prompt=prompt, n=4, size="512x512")
+    print(response)
+    return response.data[0]['url']
 
 
 client.run(os.environ['AI_BOT_TOKEN'])
