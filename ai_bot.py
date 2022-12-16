@@ -45,7 +45,7 @@ def create_ai_text(prompt):
 
 
 def create_ai_image(prompt):
-    response = openai.Image.create(prompt=prompt, n=4, size="512x512")
+    response = openai.Image.create(prompt=prompt, n=1, size="512x512")
     print(response)
     return response.data[0]['url']
 
