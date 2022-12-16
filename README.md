@@ -20,26 +20,16 @@ windows
 SETX /M AI_BOT_TOKEN "aaaa"
 SETX /M OPENAI_API_KEY "bbbb"
 python -m pip install -r requirements.txt
-```
-
-mac
-
-```
-export AI_BOT_TOKEN=aaaa
-export OPENAI_API_KEY=bbbb
-sudo python3 -m pip install -r requirements.txt
-```
-
-## Launch
-
-```
 python ai_bot.py
 ```
 
-or
+mac, linux
 
 ```
-python3 ai_bot.py
+$ export AI_BOT_TOKEN=aaaa
+$ export OPENAI_API_KEY=bbbb
+$ sudo python3 -m pip install -r requirements.txt
+$ nohup python3 mineserver-op.py > ./out.log & # 
 ```
 
 ## Message
