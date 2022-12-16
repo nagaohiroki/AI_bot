@@ -23,11 +23,14 @@ async def on_message(message):
             print(f'no mention. at: {message.channel}')
             return
     text = ''
-    tag = '/img'
-    if tag in message.clean_content:
-        text = create_ai_image(message.clean_content.replace(tag, ''))
-    else:
-        text = create_ai_text(message.clean_content)
+    try:
+        tag = '/img'
+        if tag in message.clean_content:
+            text = create_ai_image(message.clean_content.replace(tag, ''))
+        else:
+            text = create_ai_text(message.clean_content)
+    except Exception as e:
+        text = str(e)
     await message.channel.send(text)
 
 
