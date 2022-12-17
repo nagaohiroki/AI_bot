@@ -7,9 +7,9 @@ ChatGPT discord bot
 https://discordpy.readthedocs.io/ja/latest/discord.html
 
 MyApplications -> SETTINGS/Bot -> Privileged Gateway Intents
-[PRESENCE INTENT] 
-[SERVER MEMBERS INTENT]
-[MESSAGE CONTENT INTENT]
+[PRESENCE INTENT]  
+[SERVER MEMBERS INTENT]  
+[MESSAGE CONTENT INTENT]  
 
 
 ## Server Setting
@@ -29,7 +29,7 @@ mac, linux
 $ export AI_BOT_TOKEN=aaaa
 $ export OPENAI_API_KEY=bbbb
 $ sudo python3 -m pip install -r requirements.txt
-$ nohup python3 mineserver-op.py > ./out.log & # 
+$ nohup python3 ai_bot.py & 
 ```
 
 ## Message
