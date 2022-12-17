@@ -28,10 +28,20 @@ async def on_message(message):
         if tag in message.clean_content:
             text = create_ai_image(message.clean_content.replace(tag, ''))
         else:
-            text = create_ai_text(message.clean_content)
+            text = create_ai_chat(message)
     except Exception as e:
         text = str(e)
     await message.channel.send(text)
+
+
+chat_context = ''
+def create_ai_chat(message):
+    global chat_context
+    chat_context = chat_context + f'{message.author.name}:{message.clean_content}\nAI:'
+    text = create_ai_text(chat_context)
+    chat_context = chat_context + f'{text}\n'
+    print(chat_context)
+    return text.replace('AI:', '', 1)
 
 
 def create_ai_text(prompt):
@@ -39,7 +49,7 @@ def create_ai_text(prompt):
         engine="text-davinci-003",
         prompt=prompt,
         max_tokens=1024,
-        temperature=0.5)
+        temperature=0.9)
     print(response)
     return response.choices[0]['text']
 
