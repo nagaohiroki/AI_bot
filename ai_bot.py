@@ -34,14 +34,19 @@ async def on_message(message):
     await message.channel.send(text)
 
 
-chat_context = ''
+chat_context = {}
 def create_ai_chat(message):
     global chat_context
-    chat_context = chat_context + f'{message.author.name}:{message.clean_content}\nAI:'
-    text = create_ai_text(chat_context)
-    chat_context = chat_context + f'{text}\n'
-    print(chat_context)
-    return text.replace('AI:', '', 1)
+    context_text = chat_context.get(message.guild.id)
+    if not context_text:
+        context_text = ''
+    prompt = f'{context_text}{message.author.name}:{message.clean_content}\nAI:'
+    # clamp max_token
+    max_token = 4097
+    prompt = prompt[-max_token:]
+    ai_text = create_ai_text(prompt)
+    chat_context[message.guild.id] = f'{prompt}{ai_text}\n'
+    return ai_text
 
 
 def create_ai_text(prompt):
