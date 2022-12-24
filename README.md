@@ -6,7 +6,7 @@ ChatGPT discord bot
 
 https://discordpy.readthedocs.io/ja/latest/discord.html
 
-MyApplications -> SETTINGS/Bot -> Privileged Gateway Intents
+MyApplications -> SETTINGS/Bot -> Privileged Gateway Intents  
 [PRESENCE INTENT]  
 [SERVER MEMBERS INTENT]  
 [MESSAGE CONTENT INTENT]  
