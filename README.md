@@ -14,11 +14,13 @@ MyApplications -> SETTINGS/Bot -> Privileged Gateway Intents
 
 ## Server Setting
 
+replace your-discord-token and your-openai-token
+
 windows
 
 ```
-SETX /M AI_BOT_TOKEN "aaaa"
-SETX /M OPENAI_API_KEY "bbbb"
+SETX /M AI_BOT_TOKEN "your-discord-token"
+SETX /M OPENAI_API_KEY "your-openai-token"
 python -m pip install -r requirements.txt
 python ai_bot.py
 ```
@@ -26,15 +28,13 @@ python ai_bot.py
 mac, linux
 
 ```
-$ export AI_BOT_TOKEN=aaaa
-$ export OPENAI_API_KEY=bbbb
+$ export AI_BOT_TOKEN=your-discord-token
+$ export OPENAI_API_KEY=your-openai-token
 $ sudo python3 -m pip install -r requirements.txt
 $ nohup python3 ai_bot.py & 
 ```
 
-
 Docker
-replace your-discord-token and your-openai-token
 
 ```
 sudo docker build -t bot https://github.com/nagaohiroki/AI_bot.git#main
