@@ -32,6 +32,15 @@ $ sudo python3 -m pip install -r requirements.txt
 $ nohup python3 ai_bot.py & 
 ```
 
+
+Docker
+replace your-discord-token and your-openai-token
+
+```
+sudo docker build -t bot https://github.com/nagaohiroki/AI_bot.git#main
+sudo docker run --env AI_BOT_TOKEN=your-discord-token --env OPENAI_API_KEY=your-openai-token
+```
+
 ## Message
 
 change discord setting role name to AI -> AI_bot(avoid wrong mention)
