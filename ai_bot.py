@@ -5,6 +5,7 @@ import openai
 
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
+chat_context = {}
 
 
 @client.event
@@ -31,18 +32,19 @@ async def on_message(message):
             text = create_ai_chat(message)
     except Exception as e:
         text = str(e)
+        global chat_context
+        chat_context = {}
     await message.channel.send(text)
 
 
-chat_context = {}
 def create_ai_chat(message):
     global chat_context
     context_text = chat_context.get(message.guild.id)
     if not context_text:
         context_text = ''
     prompt = f'{context_text}{message.author.name}:{message.clean_content}\nAI:'
-    # clamp max_token
-    max_token = 4097
+    # clamp max_token avoid overflow error.
+    max_token = 2048
     prompt = prompt[-max_token:]
     ai_text = create_ai_text(prompt)
     chat_context[message.guild.id] = f'{prompt}{ai_text}\n'
@@ -54,7 +56,7 @@ def create_ai_text(prompt):
         engine="text-davinci-003",
         prompt=prompt,
         max_tokens=1024,
-        temperature=0.9)
+        temperature=0.7)
     print(response)
     return response.choices[0]['text']
 
