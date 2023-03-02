@@ -6,14 +6,13 @@ import openai
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 chat_context = {}
-chat_messages = []
+chat_messages = {}
 
 
 @client.event
 async def on_ready():
     openai.api_key = os.environ['OPENAI_API_KEY']
     print('AI bot login')
-    chat_messages.append({"role": "system", "content": "discord bot"})
             
 
 
@@ -71,16 +70,19 @@ def create_ai_image(prompt):
 
 
 def create_gpt_chat(message):
-    context_text = chat_context.get(message.guild.id)
-    if not context_text:
-        context_text = ''
+    id = message.guild.id
+    messages = chat_messages.get(id)
+    if not messages:
+        messages = [{"role": "system", "content": "discord chat bot"}]
+        chat_messages[id] = messages
     prompt = f'{message.author.name}:{message.clean_content}'
-    chat_messages.append({'role': 'user', 'content': prompt})
+    messages.append({'role': 'user', 'content': prompt})
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages = chat_messages)
+        messages = messages)
     new_message = response.choices[0].message.content
-    chat_messages.append({'role': 'assistant', 'content': new_message})
+    messages.append({'role': 'assistant', 'content': new_message})
+    print(messages)
     return new_message.replace('Bot: ', '')
 
 
