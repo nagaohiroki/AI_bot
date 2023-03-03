@@ -27,9 +27,13 @@ async def on_message(message):
             return
     text = ''
     try:
-        tag = '/img'
-        if tag in message.clean_content:
-            text = create_ai_image(message.clean_content.replace(tag, ''))
+        img = '/img'
+        role = '/role'
+        if img in message.clean_content:
+            text = create_ai_image(message.clean_content.replace(img, ''))
+        elif role in message.clean_content:
+            create_role(message)
+            return
         else:
             text = create_gpt_chat(message)
     except Exception as e:
@@ -69,11 +73,23 @@ def create_ai_image(prompt):
     return response.data[0]['url']
 
 
+def create_role(message):
+    id = message.guild.id
+    messages = chat_messages.get(id)
+    new_role = message.clean_content.replace('/role', '')
+    role = {'role': 'system', 'content': new_role}
+    if not messages:
+        messages = [role]
+        chat_messages[id] = messages
+        return
+    messages.append(role)
+
+
 def create_gpt_chat(message):
     id = message.guild.id
     messages = chat_messages.get(id)
     if not messages:
-        messages = [{"role": "system", "content": "discord chat bot"}]
+        messages = [{'role': 'system', 'content': 'discord bot'}]
         chat_messages[id] = messages
     prompt = f'{message.author.name}:{message.clean_content}'
     messages.append({'role': 'user', 'content': prompt})
@@ -82,8 +98,7 @@ def create_gpt_chat(message):
         messages = messages)
     new_message = response.choices[0].message.content
     messages.append({'role': 'assistant', 'content': new_message})
-    print(messages)
-    return new_message.replace('Bot: ', '')
+    return new_message.replace('Bot:', '')
 
 
 client.run(os.environ['AI_BOT_TOKEN'])
