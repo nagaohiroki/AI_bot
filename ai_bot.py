@@ -39,7 +39,9 @@ async def on_message(message):
     except Exception as e:
         text = str(e)
         global chat_context
+        global chat_messages
         chat_context = {}
+        chat_messages = {}
     await message.channel.send(text)
 
 
@@ -98,7 +100,16 @@ def create_gpt_chat(message):
         messages = messages)
     new_message = response.choices[0].message.content
     messages.append({'role': 'assistant', 'content': new_message})
+    if context_size(messages) > 4000:
+        messages = [{'role': 'system', 'content': 'discord bot'}]
     return new_message.replace('Bot:', '')
+
+
+def context_size(messages):
+    size = 0
+    for message in messages:
+        size += len(message['content'])
+    return size
 
 
 client.run(os.environ['AI_BOT_TOKEN'])
